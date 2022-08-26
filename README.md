@@ -1,3 +1,3 @@
 # BUPTArchive
 
-The archive of some code during undergraduate in BUPT.
+The archive of code for some undergraduate courses in BUPT.
