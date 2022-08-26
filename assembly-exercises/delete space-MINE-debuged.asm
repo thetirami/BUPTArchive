@@ -1,0 +1,42 @@
+;delete space key
+DATA SEGMENT
+    STRING DB 'Let          us have a try !','$'
+DATA ENDS
+
+CODE SEGMENT
+    ASSUME CS:CODE,DS:DATA
+start:
+    MOV AX,DATA
+    MOV DS,AX
+	
+	LEA SI,STRING
+OUTSI:	
+	CMP [SI],'$'
+	JZ DONE
+ 	CMP [SI],' '
+ 	PUSH SI
+	JNZ NEXT
+MOVE:
+    MOV CL,[SI+1]  
+    MOV [SI],CL
+    INC SI
+    CMP [SI],'$'
+    JNZ MOVE
+    JMP NEXTMOV
+NEXT:
+    POP SI	
+	INC SI
+	LOOP OUTSI
+NEXTMOV:
+    POP SI	
+	LOOP OUTSI 
+DONE: 
+    LEA SI,STRING
+	MOV DX,SI
+	MOV AH,09H
+	INT 21H
+    
+    MOV AH,4CH
+    INT 21H
+CODE ENDS
+    END START

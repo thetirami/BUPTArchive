@@ -1,0 +1,32 @@
+;output until 0
+DATA SEGMENT
+    STRING DB 'SDccasfed0fdz','$'
+    LEN  EQU  $-STRING-1
+DATA ENDS
+
+STACK SEGMENT STACK
+STACK ENDS
+                            
+CODE SEGMENT
+    ASSUME CS:CODE,DS:DATA,ES:EDATA,SS:STACK
+START:
+    MOV AX,DATA
+    MOV DS,AX
+    
+    LEA SI,STRING  
+    
+    MOV CX,LEN
+EXAMINE:   
+    MOV DL,0
+    MOV DL,[SI]
+    ADD SI,1
+    CMP DL,'0'
+    JZ ENDING
+    MOV AH,02H
+    INT 21H
+    LOOP EXAMINE
+ENDING:    
+    MOV AH,4CH
+    INT 21H
+CODE ENDS
+    END START

@@ -1,0 +1,60 @@
+;bubble sort
+DATA SEGMENT
+    ARRAY DB -1,76,8,34,65,-98,127,-127
+    LEN EQU  $-ARRAY
+DATA ENDS
+
+STACK SEGMENT STACK 
+STACK ENDS
+
+CODE SEGMENT
+    ASSUME CS:CODE,DS:DATA,ES:EDATA,SS:STACK
+START:
+    MOV AX,DATA
+    MOV DS,AX
+;SORT    
+    MOV CX,LEN
+OUTS:    
+    LEA SI,ARRAY
+    PUSH CX    
+        MOV CX,LEN-1
+    INTER:   
+        MOV AL,[SI]
+        CMP AL,[SI+1]
+        JLE HAHA 
+        XCHG AL,[SI+1] 
+        MOV [SI],AL
+    HAHA:        
+        INC SI
+        LOOP INTER        
+    POP CX
+    LOOP OUTS
+;OUTPUT
+    LEA SI,ARRAY
+    MOV CX,LEN
+OUTPUT:    
+    MOV BL,[SI]
+    INC SI
+    
+    PUSH CX
+    MOV CX,8
+PRINT:    
+    MOV DL,0
+    SHL BL,1
+    ADC DL,30H
+    MOV AH,02H
+    INT 21H
+    LOOP PRINT
+    MOV AH,02H 
+    MOV DL,13
+    INT 21H
+    MOV DL,10
+    INT 21H
+    
+    POP CX
+    LOOP OUTPUT
+    
+    MOV AX,4CH
+    INT 21H
+CODE ENDS
+    END START
